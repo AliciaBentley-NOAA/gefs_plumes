@@ -1,0 +1,33 @@
+#!/bin/ksh -l
+
+set +x
+source /u/Alicia.Bentley/.bashrc
+set -x
+
+cyc=$1
+
+mkdir -p /gpfs/dell1/ptmp/Alicia.Bentley
+mkdir -p /gpfs/dell1/ptmp/Alicia.Bentley/log
+mkdir -p /gpfs/dell1/stmp/Alicia.Bentley
+mkdir -p /gpfs/dell1/stmp/Alicia.Bentley/gefs
+cd /gpfs/dell1/stmp/Alicia.Bentley/gefs
+cp /gpfs/dell2/emc/verification/save/Alicia.Bentley/gefs/*gfsxsta*txt .
+
+sleep 3
+/bin/date +%Y%m%d${cyc}%a > holddate.txt
+sleep 3
+/bin/date --date="yesterday" +%Y%m%d${cyc}%a > yholddate.txt
+
+sleep 3
+bsub < /gpfs/dell2/emc/verification/save/Alicia.Bentley/gefs/run_gefs6
+sleep 3
+bsub < /gpfs/dell2/emc/verification/save/Alicia.Bentley/gefs/run_gefs5
+sleep 3
+bsub < /gpfs/dell2/emc/verification/save/Alicia.Bentley/gefs/run_gefs4
+sleep 3
+bsub < /gpfs/dell2/emc/verification/save/Alicia.Bentley/gefs/run_gefs3
+sleep 3
+bsub < /gpfs/dell2/emc/verification/save/Alicia.Bentley/gefs/run_gefs2
+sleep 3
+bsub < /gpfs/dell2/emc/verification/save/Alicia.Bentley/gefs/run_gefs
+exit

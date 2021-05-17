@@ -1,0 +1,42 @@
+#! /bin/ksh
+#
+#BSUB -J wafs.ftp
+#BSUB -oo /gpfs/dell2/emc/verification/save/Alicia.Bentley/gefs/gefsftp.out
+#BSUB -eo /gpfs/dell2/emc/verification/save/Alicia.Bentley/gefs/gefsftp.out
+#BSUB -n 1
+#BSUB -W 00:10
+#BSUB -P GEN-T2O
+#BSUB -R "affinity[core]"
+#BSUB -q dev_transfer
+#BSUB -R "rusage[mem=300]"
+
+set -x
+
+cd /gpfs/dell1/stmp/Alicia.Bentley/gefs
+
+cyc=`cut -c 9-10 holddate.txt`
+day=`cut -c 7-8 holddate.txt`
+echo $day
+number=$(ls -l * | grep csv | wc -l)
+
+pwd
+
+ls -l
+
+ls -l *csv
+
+pwd
+
+scp *pw*csv abentley@emcrzdm:/home/www/emc/htdocs/users/meg/plumes 
+scp *850*csv abentley@emcrzdm:/home/www/emc/htdocs/users/meg/plumes
+scp *cape*csv abentley@emcrzdm:/home/www/emc/htdocs/users/meg/plumes
+scp *10m*csv abentley@emcrzdm:/home/www/emc/htdocs/users/meg/plumes
+scp *typ*csv abentley@emcrzdm:/home/www/emc/htdocs/users/meg/plumes 
+scp *snow*csv abentley@emcrzdm:/home/www/emc/htdocs/users/meg/plumes 
+
+if [[ $number -gt 3700 ]];then
+  scp EMC*html abentley@emcrzdm:/home/www/emc/htdocs/users/meg/plumes/index.html
+fi
+
+exit
+
